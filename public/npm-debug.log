@@ -1,0 +1,39 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'D:\\nodejs\\node.exe',
+1 verbose cli   'D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'bootstrap#v4.0.0-alpha.2',
+1 verbose cli   '--save' ]
+2 info using npm@2.15.0
+3 info using node@v4.4.2
+4 verbose install initial load of E:\Demo\Lap1\package.json
+5 verbose installManyTop reading scoped package data from E:\Demo\Lap1\node_modules\ect\package.json
+6 verbose installManyTop reading scoped package data from E:\Demo\Lap1\node_modules\express\package.json
+7 verbose installManyTop reading scoped package data from E:\Demo\Lap1\node_modules\mongoose\package.json
+8 info package.json ect@0.5.9 No license field.
+9 verbose readDependencies loading dependencies from E:\Demo\Lap1\package.json
+10 silly cache add args [ 'bootstrap#v4.0.0-alpha.2', null ]
+11 verbose cache add spec bootstrap#v4.0.0-alpha.2
+12 silly cache add parsed spec Result {
+12 silly cache add   raw: 'bootstrap#v4.0.0-alpha.2',
+12 silly cache add   scope: null,
+12 silly cache add   name: null,
+12 silly cache add   rawSpec: 'bootstrap#v4.0.0-alpha.2',
+12 silly cache add   spec: 'E:\\Demo\\Lap1\\public\\bootstrap#v4.0.0-alpha.2',
+12 silly cache add   type: 'local' }
+13 error addLocal Could not install E:\Demo\Lap1\public\bootstrap#v4.0.0-alpha.2
+14 verbose stack Error: ENOENT: no such file or directory, open 'E:\Demo\Lap1\public\bootstrap#v4.0.0-alpha.2'
+14 verbose stack     at Error (native)
+15 verbose cwd E:\Demo\Lap1\public
+16 error Windows_NT 10.0.10586
+17 error argv "D:\\nodejs\\node.exe" "D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "bootstrap#v4.0.0-alpha.2" "--save"
+18 error node v4.4.2
+19 error npm  v2.15.0
+20 error path E:\Demo\Lap1\public\bootstrap#v4.0.0-alpha.2
+21 error code ENOENT
+22 error errno -4058
+23 error syscall open
+24 error enoent ENOENT: no such file or directory, open 'E:\Demo\Lap1\public\bootstrap#v4.0.0-alpha.2'
+24 error enoent This is most likely not a problem with npm itself
+24 error enoent and is related to npm not being able to find a file.
+25 verbose exit [ -4058, true ]

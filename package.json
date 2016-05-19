@@ -1,0 +1,18 @@
+{
+  "name": "doan",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "1312080-1312024",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "ect": "^0.5.9",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.18"
+  }
+}
