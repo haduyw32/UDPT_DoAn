@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="default.css" rel="stylesheet" type="text/css">
+        <title>Home</title>
+        <script src="jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+    var email = "<%-@wuser %>";
+    var pass = "<%-@wpass %>";
+    var name = "<%-@wname %>";
+    var arrFriend = [];//{_id, name}
+    var fcus;
+    <% if @wuser? : %> //save côkie
+        function setCookie(cname, cvalue) {
+            document.cookie = cname + "=" + cvalue + ";";
+        }
+        $(document).ready(function() {
+            setCookie("cemail", email);
+            setCookie("cpass", pass);
+            window.location.href="/";
+        });
+    <% else : %> //check cookie
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length,c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            email=getCookie("cemail");
+            pass=getCookie("cpass");
+            if (email!="" && pass!="") {
+                return true;
+            } else {
+               return false;
+            }
+        }
+        if (checkCookie() == false) {
+            window.location.href="/login";
+        }
+    <% end %>
+    </script>
+    </head>
+    <body>
+       
+    </body>
+</html>
+
