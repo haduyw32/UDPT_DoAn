@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+<!--------------------
+LOGIN FORM
+by: Amit Jakhu
+www.amitjakhu.com
+--------------------->
+
+<!--META-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login Form</title>
+
+<!--STYLESHEETS-->
+<link href="login.css" rel="stylesheet" type="text/css" />
+
+</script>
+
+</head>
+<body>
+
+<!--WRAPPER-->
+<div id="wrapper">
+
+	<!--SLIDE-IN ICONS-->
+    
+    <!--END SLIDE-IN ICONS-->
+
+<!--LOGIN FORM-->
+<form name="login-form" class="login-form" action="\signup" method="post">
+
+	<!--HEADER-->
+    <div class="header">
+    <!--TITLE--><h1>Sign Up</h1><!--END TITLE-->
+    <!--DESCRIPTION-->
+    <% if @ShowCaution? : %>
+        <span>Tên đăng nhập đã tồn tại!</span>
+    <% end %>
+    <% if @ShowCaution1? : %>
+        <span>Cần nhập đủ thông tin!</span>
+    <% end %>
+    <!--END DESCRIPTION-->
+    </div>
+    <!--END HEADER-->
+	
+	<!--CONTENT-->
+    <div class="content">
+        <input name ="name" type="text" placeholder="Họ Tên" class="input name"/>
+	<!--USERNAME--><input name="_id" type="text" class="input username" placeholder="Tên đăng nhập" onfocus="this.value=''" /><!--END USERNAME-->
+    <!--PASSWORD--><input name="pass" type="password" class="input password" placeholder="Password" onfocus="this.value=''" /><!--END PASSWORD-->
+    <input name="cmnd" type="text" class="input password" placeholder="Số CMND" onfocus="this.value=''" />
+        <input name="age" type="date" class="input password" placeholder="Tuổi của trẻ" onfocus="this.value=''" />
+    </div>
+    <!--END CONTENT-->
+    
+    <!--FOOTER-->
+    <div class="footer">
+    <!--LOGIN BUTTON--><input type="submit" name="submit" value="Register" class="button" /><!--END LOGIN BUTTON-->
+    <input type="submit" name="submit" value="Login" class="register"
+    </div>
+    <!--END FOOTER-->
+
+</form>
+<!--END LOGIN FORM-->
+
+</div>
+<!--END WRAPPER-->
+
+<!--GRADIENT--><div class="gradient"></div><!--END GRADIENT-->
+
+</body>
+</html>
