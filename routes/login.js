@@ -29,7 +29,7 @@ module.exports = function (app) {
       	db.insertUser(data, function (varOut) {
       		if (varOut == 1) {
       			console.log("signup: " + data);
-      			//res.redirect('/login');
+      			res.redirect('/login');
       		}
       		else {
       			invalid ();
@@ -63,15 +63,15 @@ module.exports = function (app) {
       			return;
       	}
       	if (data._id == '' || data.pass == '') {
-      		console.log('Thieu thong tin');
 			return invalid();
 		}
 		db.loginUser(data, function(doc) {
 			if (doc == null) {
 				invalid ();
 			}
-			else {console.log(doc);
+			else {;
 				res.render('index.ect', { wuser: doc._id, wpass: doc.pass, wname: doc.name });
+				console.log(doc._id + " -> login");
 			}
 		});
       	function invalid () {
