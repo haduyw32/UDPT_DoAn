@@ -5,18 +5,19 @@
         <title>Home</title>
         <script src="jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
-    var email = "<%-@wuser %>";
-    var pass = "<%-@wpass %>";
-    var name = "<%-@wname %>";
-    var arrFriend = [];//{_id, name}
-    var fcus;
+        var _id = "<%-@wuser %>";
+        var pass = "<%-@wpass %>";
+        var name = "<%-@wname %>";
+        var arrFriend = [];//{_id, name}
+        var fcus;
     <% if @wuser? : %> //save côkie
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";";
         }
         $(document).ready(function() {
-            setCookie("cemail", email);
+            setCookie("c_id", _id);
             setCookie("cpass", pass);
+            setCookie("cname", name);
             window.location.href="/";
         });
     <% else : %> //check cookie
@@ -36,7 +37,7 @@
         }
 
         function checkCookie() {
-            email=getCookie("cemail");
+            email=getCookie("c_id");
             pass=getCookie("cpass");
             if (email!="" && pass!="") {
                 return true;
@@ -49,9 +50,18 @@
         }
     <% end %>
     </script>
+    <% include 'header.ect' %>
     </head>
     <body>
-       
+        <form name="func-form" class="header" action="\" method="post" style="
+    margin-top: 20px;">
+            <div>
+                <input align="middle" type="submit" name="submit" value="Đăng kí tiêm" class="butFunc"/>
+                <br>
+                <input type="submit" name="submit" value="Xem lịch sử đăng kí" class="butFunc" />
+            </div>
+        </form>
+        
     </body>
 </html>
 

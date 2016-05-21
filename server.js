@@ -6,7 +6,7 @@ var routes = require('./routes');
 
 var app = express();
 
-var port = 3000;
+var port = 80;
 app.listen(port, function () {
  		console.log('now listening on http://localhost:' + port);
 })
