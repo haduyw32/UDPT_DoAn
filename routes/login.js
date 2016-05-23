@@ -3,8 +3,7 @@
 //var User = mongoose.model('User');
 var url = require("url");
 var db = require('../helpers/db');
-var hash = require('../helpers/hash');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 
 module.exports = function (app) {
@@ -18,65 +17,50 @@ module.exports = function (app) {
 	app.post('/signup', function (req, res, next) {
 		var data = req.body;
 		if (data.submit == "Login") {
-      			res.render('login.ect', { });
-      			return;
-      	}
-      	if (data._id == '' || data.pass == '' || data.name == '' || data.cmnd == '' || data.age =='') {
-      			console.log('Thieu thong tin dang ki');
-      			res.render('signup.ect', { ShowCaution1: true }); //thieu thong tin
-				return;
+			res.render('login.ect', { });
+			return;
 		}
-      	db.insertUser(data, function (varOut) {
-      		if (varOut == 1) {
-      			console.log("signup: " + data);
-      			res.redirect('/login');
+		if (data._id == '' || data.pass == '' || data.name == '' || data.cmnd == '' || data.age =='') {
+			console.log('Thieu thong tin dang ki');
+      			res.render('signup.ect', { ShowCaution1: true }); //thieu thong tin
+      			return;
       		}
-      		else {
-      			invalid ();
-      		}
-      	});
-		//db.demo(req.body.name);
-		/*req.on('data', function(chunk) {
-      		var data = hash(chunk);
-      		
-      		
-			console.log(data);
-			db.insertUser(data, function(doc) {
-				if (doc == 0) {
-					invalid ();
-				}
-				else {
-					res.redirect('/login');
-				}
-			});
-      	})*/
+      		db.insertUser(data, function (varOut) {
+      			if (varOut == 1) {
+      				console.log("signup: " + data);
+      				res.redirect('/login');
+      			}
+      			else {
+      				invalid ();
+      			}
+      		});
 
-		function invalid () {
+      		function invalid () {
 			return res.render('signup.ect', { ShowCaution: true }); //ten dang nhap da ton tai
 		}
 	});
 //-----------------------------------------------------------
-	app.post('/login', function (req, res, next) {
-		var data = req.body;
-      	if (data.submit == "Register") {
-      		res.render('signup.ect', { });
-      			return;
-      	}
-      	if (data._id == '' || data.pass == '') {
-			return invalid();
+app.post('/login', function (req, res, next) {
+	var data = req.body;
+	if (data.submit == "Register") {
+		res.render('signup.ect', { });
+		return;
+	}
+	if (data._id == '' || data.pass == '') {
+		return invalid();
+	}
+	db.loginUser(data, function(doc) {
+		if (doc == null) {
+			invalid ();
 		}
-		db.loginUser(data, function(doc) {
-			if (doc == null) {
-				invalid ();
-			}
-			else {;
-				res.render('index.ect', { wuser: doc._id, wpass: doc.pass, wname: doc.name });
-				console.log(doc._id + " -> login");
-			}
-		});
-      	function invalid () {
-			return res.render('login.ect', { ShowCaution: true });
+		else {;
+			res.render('index.ect', { wuser: doc._id, wpass: doc.pass, wname: doc.name });
+			console.log(doc._id + " -> login");
 		}
 	});
+	function invalid () {
+		return res.render('login.ect', { ShowCaution: true });
+	}
+});
 }
 

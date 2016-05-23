@@ -1,16 +1,17 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link href="default.css" rel="stylesheet" type="text/css">
+        <link href="css/default.css" rel="stylesheet" type="text/css">
         <title>Home</title>
-        <script src="jquery-1.9.1.min.js"></script>
+        <script src="js/jquery-1.9.1.min.js"></script>
+    
+    <% if @wuser? : %> //save côkie
     <script type="text/javascript">
         var _id = "<%-@wuser %>";
         var pass = "<%-@wpass %>";
         var name = "<%-@wname %>";
         var arrFriend = [];//{_id, name}
         var fcus;
-    <% if @wuser? : %> //save côkie
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";";
         }
@@ -20,45 +21,19 @@
             setCookie("cname", name);
             window.location.href="/";
         });
-    <% else : %> //check cookie
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for(var i = 0; i <ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length,c.length);
-                }
-            }
-            return "";
-        }
-
-        function checkCookie() {
-            email=getCookie("c_id");
-            pass=getCookie("cpass");
-            if (email!="" && pass!="") {
-                return true;
-            } else {
-               return false;
-            }
-        }
-        if (checkCookie() == false) {
-            window.location.href="/login";
-        }
-    <% end %>
     </script>
+    <% else : %>
+        <script src="js/Cookie.js"></script>
+    <% end %>
+    
     <% include 'header.ect' %>
     </head>
     <body>
-        <form name="func-form" class="header" action="\" method="post" style="
-    margin-top: 20px;">
+        <form name="func-form" class="header" action="\confirm_but" method="post" style="margin-top: 20px;">
             <div>
-                <input align="middle" type="submit" name="submit" value="Đăng kí tiêm" class="butFunc"/>
+                <input type="submit" name="submit" value="Đăng kí tiêm" class="butFunc" style="margin-left: 38%"/>
                 <br>
-                <input type="submit" name="submit" value="Xem lịch sử đăng kí" class="butFunc" />
+                <input type="submit" name="submit" value="Xem lịch sử đăng kí" class="butFunc" style="margin-left: 35%"/>
             </div>
         </form>
         
