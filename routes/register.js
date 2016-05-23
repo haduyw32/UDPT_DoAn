@@ -14,4 +14,19 @@ module.exports = function (app) {
 			res.redirect('/register');
 		}
 	});
+
+	app.post('/register', function (req, res, next) {//nhận thông tin đăng kí
+		var len = req.body.reg.length;
+		for (var i=0; i<len; i++) {
+			db.insertRegister(req.body.reg[i], function (varOut) {
+				
+				/*if (varOut == 0) {
+					res.send(false);
+					return;
+				}
+				res.send(true);*/
+			});
+		};
+		res.send(true);
+	});
 }

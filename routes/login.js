@@ -1,6 +1,4 @@
 
-//var mongoose = require('mongoose');
-//var User = mongoose.model('User');
 var url = require("url");
 var db = require('../helpers/db');
 var bodyParser = require('body-parser');

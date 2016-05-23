@@ -25,34 +25,8 @@ function insertUser (data, callback) {
 		});
 	};
 
-	/*var insertbegin = function(db) {
-		db.collection('listFriend').insertOne( {
-			"_id": data.email,
-			"friend": []
-		}, function(err, result) {
-			if (err) {
-				docOut = 0;
-				return;
-			}
-  		});
-	};
-
-	var insertbeginM = function(db) {
-		db.collection('listMes').insertOne( {
-			"_id": data.email,
-			"friend": []
-		}, function(err, result) {
-			if (err) {
-				docOut = 0;
-				return;
-			}
-  		});
-	};*/
-
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
- 		//insertbegin(db);
- 		//insertbeginM(db);
   		insertDocument(db, function() {
       		db.close();
       		callback(varOut);
@@ -115,6 +89,33 @@ function loadSchedule(callback) {
 	});
 }
 
+function insertRegister (data, callback) {
+	var varOut = 1;
+	var insertReg = function(db, callback) {
+		db.collection('register').insertOne( {
+			_id: { place: data._id.place, typeVacxin: data._id.typeVacxin, user: data._id.user },
+			date: data.date
+		}, function(err, result) {
+			if (err) {
+				varOut = 0;
+				callback();
+				return;
+			}
+			console.log("Inserted a document into the register collection.");
+			callback();
+		});
+	};
+
+	MongoClient.connect(url, function(err, db) {
+ 		assert.equal(null, err);
+ 		//insertbeginM(db);
+  		insertReg(db, function() {
+      		db.close();
+      		callback(varOut);
+  		});
+	});
+}
+
 function loadVacxin(type, callback) {
 	var docOut;
 	var findSchedule = function(db, callback) {
@@ -131,11 +132,15 @@ function loadVacxin(type, callback) {
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
 		findSchedule(db, function() {
+
 			db.close();
 			callback(docOut);
 		});
 	});
 }
+
+
+
 /*
 function findFriend (data, callback) { //hoan thanh: 1, loi: 0|| email: username, txt: elm.value
 	var Out = 1;
@@ -295,6 +300,5 @@ exports.sendMes = sendMes;
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.loadSchedule = loadSchedule;
+exports.insertRegister = insertRegister;
 exports.loadVacxin = loadVacxin;
-
-
