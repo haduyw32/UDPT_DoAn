@@ -2,12 +2,12 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 //var url = 'mongodb://udpt:ABab1234@ds021711.mlab.com:21711/udpt';
-var url = 'mongodb://localhost:27017/udpt_doan';
+var url = 'mongodb://127.0.0.1:27017/udpt_doan';
 
 
 function insertUser (data, callback) {
 	var varOut = 1;
-  	var insertDocument = function(db, callback) {
+	var insertDocument = function(db, callback) {
 		db.collection('userInfo').insertOne( {
 			"name": data.name,
 			"_id": data._id,
@@ -20,9 +20,9 @@ function insertUser (data, callback) {
 				callback();
 				return;
 			}
-    		console.log("Inserted a document into the userInfo collection.");
-    		callback();
-  		});
+			console.log("Inserted a document into the userInfo collection.");
+			callback();
+		});
 	};
 
 	/*var insertbegin = function(db) {
@@ -82,6 +82,60 @@ function loginUser (data, callback) {
 	});
 }
 
+
+function loadSchedule(callback) {
+	var docOut = [];
+	var findSchedule = function(db, callback) {
+		var cursor =db.collection('schedule').aggregate([
+		{
+			$lookup:
+			{
+				from: "vacxin",
+				localField: "vacxin",
+				foreignField: "_id",
+				as: "vacxin_docs"
+			}
+		}
+		]);
+		cursor.each(function(err, doc) {
+			assert.equal(err, null);
+			if (doc != null) {
+				docOut.push(doc);
+			} else {
+				callback();
+			}
+		});
+	};
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findSchedule(db, function() {
+			db.close();
+			callback(docOut);
+		});
+	});
+}
+
+function loadVacxin(type, callback) {
+	var docOut;
+	var findSchedule = function(db, callback) {
+		var cursor =db.collection('vacxin').find( { _id:  type} );
+		cursor.each(function(err, doc) {
+			assert.equal(err, null);
+			if (doc != null) {
+				docOut = doc;
+			} else {
+				callback();
+			}
+		});
+	};
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findSchedule(db, function() {
+			db.close();
+			callback(docOut);
+		});
+	});
+}
 /*
 function findFriend (data, callback) { //hoan thanh: 1, loi: 0|| email: username, txt: elm.value
 	var Out = 1;
@@ -240,6 +294,7 @@ exports.sendMes = sendMes;
 */
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
-
+exports.loadSchedule = loadSchedule;
+exports.loadVacxin = loadVacxin;
 
 
