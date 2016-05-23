@@ -44,6 +44,13 @@ html {
     margin-right: auto ;
 
 }
+
+.content {
+   max-width: 1200px;
+   min-width: 1200px;
+   margin-left: auto ;
+   margin-right: auto ;
+}
 .logo {
     float: left;
     width: 100%;
@@ -72,12 +79,13 @@ html {
 }
 
 .header_text hr {
-    width: 45%;
+    width: 60%;
     color: red;
     margin-top: 28px;
     margin-bottom: 25px;
     display: -webkit-inline-box;
-    
+    margin-left: 100px;
+    margin-right: auto;
 }
 
 .header_text {

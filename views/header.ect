@@ -1,33 +1,33 @@
 <div class="header">
- 	<div style="float:left"><a class="logo" href="/">
- 		<span><img src="logo1.jpg"> </span>
- 	</a></div>
+	<div style="float:left"><a class="logo" href="/">
+		<span><img src="logo1.jpg"> </span>
+	</a></div>
 
- 	<div class="header_text">
- 		<h1> ĐĂNG KÍ THEO DÕI <br> LỊCH TIÊM VẮC XIN </h1>
- 		<br><br><hr /><br>
-    </div>
- 		
- 	<div class="logout">
- 		<div style="float:right">
- 			<a href="">
- 				<span>
- 					<img onclick="logout()" src="images\logout.png" width="40" style="vertical-align:bottom"/>
- 				</span>
- 			</a>
- 		</div>
- 		<div style="float: right; margin-left: auto; margin-right: auto ; padding-top: 7px; padding-right:5px">
- 			<p id="userName">  </p>
- 		</div>
- 		<script type="text/javascript"> 	
- 			document.getElementById("userName").innerText = getCookie("cname");
- 			function logout() {
-                document.cookie = "c_id=;";
-                document.cookie = "cpass=;";
-                document.cookie = "cname=;";
-                window.location.href="/login";
-            }
- 		</script> 		
- 	</div>
+	<div class="header_text">
+		<h1> ĐĂNG KÍ THEO DÕI <br> LỊCH TIÊM VẮC XIN </h1>
+		<br><br><hr /><br>
+	</div>
+	
+	<div class="logout">
+		<div style="float:right">
+			<a href="">
+				<span>
+					<img onclick="logout()" src="images\logout.png" width="40" style="vertical-align:bottom"/>
+				</span>
+			</a>
+		</div>
+		<div style="float: right; margin-left: auto; margin-right: auto ; padding-top: 7px; padding-right:5px">
+			<p id="userName">  </p>
+		</div>
+		<script type="text/javascript"> 	
+			document.getElementById("userName").innerText = getCookie("cname");
+			function logout() {
+				document.cookie = "c_id=;";
+				document.cookie = "cpass=;";
+				document.cookie = "cname=;";
+				window.location.href="/login";
+			}
+		</script> 		
+	</div>
 
 </div>
