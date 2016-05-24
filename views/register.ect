@@ -3,9 +3,13 @@
 	<meta charset="utf-8">
 	<link href="css/default.css" rel="stylesheet" type="text/css">
 	<link href="css/register.css" rel="stylesheet" type="text/css">
+	<link href="css/box.css" rel="stylesheet" type="text/css">
 	<title>Home</title>
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/Cookie.js"></script>
+	<script type="text/javascript">
+		var reg = []; //{_id: {place, typeVacxin, user}, date}
+	</script>
 	<% include 'header.ect' %>
 </head>
 <body>
@@ -41,11 +45,75 @@
 		</table>
 	</div>
 	<% end %>
-	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('.flatTable tr').bind('change', 'td input', function() { //dữ liệu input thay đổi
+			$(this).toggleClass('selected');
+			var typeVacxin;
+			var place;
+			var date;
+			var index = $(".selected").index();
+			if (index >= 2) {				
+				date = $(".selected td input").val();
+				if (date != "") {
+					$(this).css("background", "yellow");
+					place = $(".selected").parent().children().first().children().text();//lấy mã bệnh viện
+					typeVacxin = $(".selected td:first").text(); //mã vacxin
+					var temp = {_id:{place: place, typeVacxin: typeVacxin, user: getCookie("c_id")}, date:date};
+					reg.push(temp);
+					var deselect = $("tr:not(tr.selected)");
+					for (var i=0; i<deselect.length; i++) {
+						if (deselect.eq(i).children().first().text() == typeVacxin) {
+							deselect.eq(i).children().find("input").prop('disabled', true);
+							deselect.eq(i).css("background", "red");
+						}
+					}
+				}
+				else {
+					$(this).css("background", "#d4d1d5");
+					typeVacxin = $(".selected td:first").text();
+					for (var i=0; i<reg.length; i++) {
+						if (reg[i]._id.typeVacxin == typeVacxin) {
+							reg.splice(i, 1);
+							break;
+						}
+					}
+					var deselect = $("tr:not(tr.selected)");
+					for (var i=0; i<deselect.length; i++) {
+						if (deselect.eq(i).children().first().text() == typeVacxin) {
+							deselect.eq(i).children().find("input").prop('disabled', false);
+							deselect.eq(i).css("background", "#d4d1d5");
+						}
+					}
+				}
+				$(this).removeClass("selected");
+			}
+			else
+				return;
+		});
+	});
+	</script>
+
 	<div class="footer">
-		<form action="\register" method="post">
-			<input type="submit" name="submit" value="Xác nhận" style="vertical-align:middle">
-		</form>
+		<button style="vertical-align:middle"><span>Xác Nhận</span></button>
 	</div>
+	<script type="text/javascript">
+		$(".footer button").click(function() {
+			if (reg.length == 0) {
+				alert("Bạn chưa đăng kí lịch tiêm nào. Chọn và thử lại!");
+			}
+			else {
+				$.post("/saveReg", {reg: reg},  function(data) { //reg[{_id:{place:, stypeVacxin, user}, date}]
+					if (data == 1) {
+						alert ("Đăng kí thành công");
+						window.location.reload();
+					}
+					else{
+						alert ("Có lỗi trong quá trình đăng kí");
+					}
+				});
+			}
+		});
+	</script>
 </body>
 </html>
