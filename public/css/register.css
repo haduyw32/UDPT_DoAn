@@ -122,23 +122,42 @@ tr:nth-child(3) .settingsIcon {
   margin-right: auto ;
 }
 
-.footer input {
+.footer button {
   display: inline-block;
   border-radius: 4px;
   background-color: #f4511e;
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 23px;
+  font-size: 20px;
   padding: 13px;
-  width: 155px;
+  width: 150px;
   transition: all 0.5s;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 20px;
   float: right;
 }
+.footer button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
 
-.footer input:hover span:after {
+.footer button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.footer button:hover span {
+  padding-right: 25px;
+}
+
+.footer button:hover span:after {
   opacity: 1;
   right: 0;
 }

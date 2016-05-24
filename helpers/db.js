@@ -25,34 +25,8 @@ function insertUser (data, callback) {
 		});
 	};
 
-	/*var insertbegin = function(db) {
-		db.collection('listFriend').insertOne( {
-			"_id": data.email,
-			"friend": []
-		}, function(err, result) {
-			if (err) {
-				docOut = 0;
-				return;
-			}
-  		});
-	};
-
-	var insertbeginM = function(db) {
-		db.collection('listMes').insertOne( {
-			"_id": data.email,
-			"friend": []
-		}, function(err, result) {
-			if (err) {
-				docOut = 0;
-				return;
-			}
-  		});
-	};*/
-
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
- 		//insertbegin(db);
- 		//insertbeginM(db);
   		insertDocument(db, function() {
       		db.close();
       		callback(varOut);
@@ -83,7 +57,7 @@ function loginUser (data, callback) {
 }
 
 
-function loadSchedule(callback) {
+function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại vacxin
 	var docOut = [];
 	var findSchedule = function(db, callback) {
 		var cursor =db.collection('schedule').aggregate([
@@ -100,7 +74,17 @@ function loadSchedule(callback) {
 		cursor.each(function(err, doc) {
 			assert.equal(err, null);
 			if (doc != null) {
-				docOut.push(doc);
+				for (var i=0; i<vacxin.length; i++) {
+					for (var j=0; j<doc.vacxin_docs.length;j++) {
+						if (doc.vacxin_docs[j]._id == vacxin[i]) {
+							doc.vacxin_docs.splice(j, 1);
+							j = j - 1;
+						}
+					}
+				}
+				if (doc.vacxin_docs.length != 0){
+					docOut.push(doc);
+				}
 			} else {
 				callback();
 			}
@@ -115,14 +99,45 @@ function loadSchedule(callback) {
 	});
 }
 
-function loadVacxin(type, callback) {
-	var docOut;
-	var findSchedule = function(db, callback) {
-		var cursor =db.collection('vacxin').find( { _id:  type} );
+function insertRegister (data, callback) {
+	var varOut = 1;
+	
+	var insertReg = function(db, callback) {
+		//for (var i=0; i<data.length; i++) {
+			db.collection('register').insertOne( {
+				_id: { place: data._id.place, typeVacxin: data._id.typeVacxin, user: data._id.user },
+				date: data.date
+			}, function(err, result) {
+				if (err) {
+					varOut = 0;
+					callback();
+					return;
+				}
+				console.log("Inserted a document into the register collection.");
+				callback();
+			});
+		//}
+		
+	};
+
+	MongoClient.connect(url, function(err, db) {
+ 		assert.equal(null, err);
+ 		//insertbeginM(db);
+  		insertReg(db, function() {
+      		db.close();
+      		callback(varOut);
+  		});
+	});
+}
+
+function loadRegister(user, callback) {
+	var docOut = [];
+	var findReg = function(db, callback) {
+		var cursor =db.collection('register').find( { "_id.user":  user} );
 		cursor.each(function(err, doc) {
 			assert.equal(err, null);
 			if (doc != null) {
-				docOut = doc;
+				docOut.push(doc._id.typeVacxin);
 			} else {
 				callback();
 			}
@@ -130,12 +145,15 @@ function loadVacxin(type, callback) {
 	};
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
-		findSchedule(db, function() {
+		findReg(db, function() {
 			db.close();
 			callback(docOut);
 		});
 	});
 }
+
+
+
 /*
 function findFriend (data, callback) { //hoan thanh: 1, loi: 0|| email: username, txt: elm.value
 	var Out = 1;
@@ -295,6 +313,5 @@ exports.sendMes = sendMes;
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.loadSchedule = loadSchedule;
-exports.loadVacxin = loadVacxin;
-
-
+exports.insertRegister = insertRegister;
+exports.loadRegister = loadRegister;
