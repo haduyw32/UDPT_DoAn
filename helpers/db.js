@@ -57,7 +57,7 @@ function loginUser (data, callback) {
 }
 
 
-function loadSchedule(callback) {
+function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại vacxin
 	var docOut = [];
 	var findSchedule = function(db, callback) {
 		var cursor =db.collection('schedule').aggregate([
@@ -74,7 +74,17 @@ function loadSchedule(callback) {
 		cursor.each(function(err, doc) {
 			assert.equal(err, null);
 			if (doc != null) {
-				docOut.push(doc);
+				for (var i=0; i<vacxin.length; i++) {
+					for (var j=0; j<doc.vacxin_docs.length;j++) {
+						if (doc.vacxin_docs[j]._id == vacxin[i]) {
+							doc.vacxin_docs.splice(j, 1);
+							j = j - 1;
+						}
+					}
+				}
+				if (doc.vacxin_docs.length != 0){
+					docOut.push(doc);
+				}
 			} else {
 				callback();
 			}
@@ -91,19 +101,23 @@ function loadSchedule(callback) {
 
 function insertRegister (data, callback) {
 	var varOut = 1;
+	
 	var insertReg = function(db, callback) {
-		db.collection('register').insertOne( {
-			_id: { place: data._id.place, typeVacxin: data._id.typeVacxin, user: data._id.user },
-			date: data.date
-		}, function(err, result) {
-			if (err) {
-				varOut = 0;
+		//for (var i=0; i<data.length; i++) {
+			db.collection('register').insertOne( {
+				_id: { place: data._id.place, typeVacxin: data._id.typeVacxin, user: data._id.user },
+				date: data.date
+			}, function(err, result) {
+				if (err) {
+					varOut = 0;
+					callback();
+					return;
+				}
+				console.log("Inserted a document into the register collection.");
 				callback();
-				return;
-			}
-			console.log("Inserted a document into the register collection.");
-			callback();
-		});
+			});
+		//}
+		
 	};
 
 	MongoClient.connect(url, function(err, db) {
@@ -116,14 +130,14 @@ function insertRegister (data, callback) {
 	});
 }
 
-function loadVacxin(type, callback) {
-	var docOut;
-	var findSchedule = function(db, callback) {
-		var cursor =db.collection('vacxin').find( { _id:  type} );
+function loadRegister(user, callback) {
+	var docOut = [];
+	var findReg = function(db, callback) {
+		var cursor =db.collection('register').find( { "_id.user":  user} );
 		cursor.each(function(err, doc) {
 			assert.equal(err, null);
 			if (doc != null) {
-				docOut = doc;
+				docOut.push(doc._id.typeVacxin);
 			} else {
 				callback();
 			}
@@ -131,8 +145,7 @@ function loadVacxin(type, callback) {
 	};
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
-		findSchedule(db, function() {
-
+		findReg(db, function() {
 			db.close();
 			callback(docOut);
 		});
@@ -301,4 +314,4 @@ exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.loadSchedule = loadSchedule;
 exports.insertRegister = insertRegister;
-exports.loadVacxin = loadVacxin;
+exports.loadRegister = loadRegister;

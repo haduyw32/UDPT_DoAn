@@ -7,7 +7,7 @@
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/Cookie.js"></script>
 	<script type="text/javascript">
-		var reg = [];
+		var reg = []; //{_id: {place, typeVacxin, user}, date}
 	</script>
 	<% include 'header.ect' %>
 </head>
@@ -46,6 +46,7 @@
 	<% end %>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		//$.get("/register", {user: getCookie("c_id")});
 		$('.flatTable tr').bind('change', 'td input', function() { //dữ liệu input thay đổi
 			$(this).toggleClass('selected');
 			var typeVacxin;
@@ -102,7 +103,7 @@
 				alert("Bạn chưa đăng kí lịch tiêm nào. Chọn và thử lại!");
 			}
 			else {
-				$.post("/register", {reg: reg},  function(data) { //reg[{_id:{place:, stypeVacxin, user}, date}]
+				$.post("/saveReg", {reg: reg},  function(data) { //reg[{_id:{place:, stypeVacxin, user}, date}]
 					if (data == 1) {
 						alert ("Đăng kí thành công");
 						window.location.reload();
