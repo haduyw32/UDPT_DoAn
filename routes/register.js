@@ -15,17 +15,22 @@ module.exports = function (app) {
 	});
 
 	app.post('/saveReg', function (req, res, next) {//nhận thông tin đăng kí
-		var len = req.body.reg.length;
-		for (var i=0; i<len; i++) {
-			db.insertRegister(req.body.reg[i], function (varOut) {
-				
-				/*if (varOut == 0) {
-					res.send(false);
-					return;
-				}
-				res.send(true);*/
-			});
-		};
-		res.send(true);
+		db.insertRegister(req.body.reg, function (varOut) {
+			if (varOut == 0) {
+				res.send(false);
+			}
+			else {
+				res.send(true);
+			}
+/*
++ vacxin {_id, use, age[]}
++ register {_id: {place, typeVacxin, user}, date} --địa điểm và vacxin đăng kí ở địa điểm đó
+
+---------------------------------------------------------------------
++injectInfo {_id:{user, typeVacxin}, lichTiem[{ordinalNum, date, state}]}
+*/
+		});
 	});
+
+	
 }

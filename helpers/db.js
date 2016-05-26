@@ -101,32 +101,51 @@ function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại va
 
 function insertRegister (data, callback) {
 	var varOut = 1;
-	
 	var insertReg = function(db, callback) {
-		//for (var i=0; i<data.length; i++) {
+		for (var i=0; i<data.length; i++) {
 			db.collection('register').insertOne( {
-				_id: { place: data._id.place, typeVacxin: data._id.typeVacxin, user: data._id.user },
-				date: data.date
+				_id: { place: data[i]._id.place, typeVacxin: data[i]._id.typeVacxin, user: data[i]._id.user },
+				date: data[i].date
+			}, function(err, result) {
+				if (err) {
+					varOut = 0;
+					callback();
+				}				
+				if (result.insertedId.place == data[data.length-1]._id.place && result.insertedId.typeVacxin == data[data.length-1]._id.typeVacxin && result.insertedId.user == data[data.length-1]._id.user) {
+					callback();
+				}				
+			});
+		}
+		
+	};
+
+	var insertInject = function(db, callback) {
+		for (var i=0; i<data.length; i++) {
+			db.collection('injectInfo').insertOne( {
+				_id:{user: data[i]._id.user, typeVacxin: data[i]._id.typeVacxin}, lichTiem:[{ordinalNum: 0, date: data[i].date, state: 0}]
 			}, function(err, result) {
 				if (err) {
 					varOut = 0;
 					callback();
 					return;
 				}
-				console.log("Inserted a document into the register collection.");
-				callback();
+				console.log("Inserted a document into the register and injectInfo collection.");
+				if (result.insertedId.typeVacxin == data[data.length-1]._id.typeVacxin && result.insertedId.user == data[data.length-1]._id.user) {
+					callback();
+				}
 			});
-		//}
+		}
 		
 	};
 
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
- 		//insertbeginM(db);
-  		insertReg(db, function() {
-      		db.close();
-      		callback(varOut);
-  		});
+ 		insertReg(db, function() {
+ 			insertInject(db, function() {
+ 				db.close();
+ 				callback(varOut);
+ 			});
+ 		});
 	});
 }
 
