@@ -2,7 +2,7 @@
 
 **Quản lý tiêm chủng vắc-xin** 
 
-Danh sách sinh viên:    1312024 - Phạm Trọng Ân
+Danh sách sinh viên:  
                         
                         1312080 - Hà Xuân Duy
                         
@@ -45,6 +45,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ![alt tag](https://github.com/haduyw32/UDPT_DoAn/blob/master/wireframe.jpg)
 ## Chuẩn đầu ra
  [chuan dau ra](https://github.com/haduyw32/UDPT_DoAn/blob/master/Chuan%20dau%20ra.docx)
+## DAta schema
+![alt tag](https://github.com/haduyw32/UDPT_DoAn/blob/master/doan_udpt_mongodb_3.3.4.png)
 ## Notes
 
 Describe any challenges encountered while building the app.
