@@ -41,7 +41,8 @@ Here's a walkthrough of implemented user stories:
 ![Video Walkthrough](https://github.com/haduyw32/UDPT_DoAn/blob/master/demo.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
-
+## Wireframe
+![alt tag](https://github.com/haduyw32/UDPT_DoAn/blob/master/wireframe.jpg)
 ## Notes
 
 Describe any challenges encountered while building the app.
