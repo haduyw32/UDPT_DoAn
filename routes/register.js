@@ -6,6 +6,7 @@ module.exports = function (app) {
 
 	app.post('/register', function (req, res, next) {
 		if (req.body.submit == "Đăng kí tiêm") {
+			console.log(req.body);
 			db.loadRegister(req.body.user, function(vacxin) {
 				db.loadSchedule(vacxin, function(docOut) {
 					res.render('register.ect', {listTable: docOut});
@@ -13,6 +14,7 @@ module.exports = function (app) {
 			});
 		}
 	});
+
 
 	app.post('/saveReg', function (req, res, next) {//nhận thông tin đăng kí
 		db.insertRegister(req.body.reg, function (varOut) {

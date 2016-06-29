@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var login = require('./login');
 var register = require('./register');
+var review = require('./review');
 
 router.get('/login', function(req, res) {
 	res.render('login.ect', { title: 'Login' });
@@ -17,5 +18,6 @@ router.get('/', function(req, res) {
 
 login(router);
 register(router);
+review(router);
 
 module.exports = router;

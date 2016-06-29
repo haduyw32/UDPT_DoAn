@@ -30,24 +30,34 @@
     <% include 'header.ect' %>
     </head>
     <body>
-        <div class="alert-box notice"><span>notice: </span>thông báo.</div>
+        <div class="alert-box notice"><span>notice: </span>thông báo.
+        <a href="#"> <img src="/images/error.png" align="right"> </a>
+        </div>
         <script type="text/javascript">
-            $(".alert-box").slideDown().delay( 2000 );
-            $(".alert-box").slideUp();
+            $(".alert-box img").click(function () { 
+                $(".alert-box").slideUp();
+            });
+            $(".alert-box").slideDown();
         </script>
 
         <form name="func-form" class="header" action="\register" method="post" style="margin-top: 20px;">
             <div>
                 <input type="submit" name="submit" value="Đăng kí tiêm" class="butFunc" style="margin-left: 38%"/>
-                <br>
-                <input type="submit" name="submit" value="Xem lịch sử đăng kí" class="butFunc" style="margin-left: 35%"/>
-                
             </div>
         </form>
-        <script type="text/javascript">
-            var strhtml = "<input type=hidden name=user value=" +  getCookie("c_id") + " />";
 
-            $("form div").html($("form div").html() + strhtml);
+        <form name="func-form" class="header" action="\review" method="get" style="margin-top: 20px;">
+            <div>
+                <input type="submit" name="submit" value="Xem lịch sử đăng kí" class="butFunc" style="margin-left: 35%"/></a>
+            </div>
+        </form>
+
+        <script type="text/javascript">
+            $("form div").ready(function() {
+                var strhtml = "<input type=hidden name=user value=" +  getCookie("c_id") + " />";
+                $("form div").append(strhtml);
+            });
+            
         </script>
     </body>
 </html>
