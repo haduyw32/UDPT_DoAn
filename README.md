@@ -18,7 +18,7 @@ Danh sách chức năng **bắt buộc**:
 
 * [x] Đăng ký tài khoản bằng email, password, tên, số CMND người đỡ đầu, ngày sinh của trẻ.
 * [x] Đăng nhập bằng email và password.
-* [ ] Sau khi đăng nhập, người dùng sẽ được chuyển đến trang liệt kê danh sách các tính năng được cung cấp: đăng kí địa điểm thời gian tiêm, xem lịch tiêm đã đăng kí.
+* [x] Sau khi đăng nhập, người dùng sẽ được chuyển đến trang liệt kê danh sách các tính năng được cung cấp: đăng kí địa điểm thời gian tiêm, xem lịch tiêm đã đăng kí.
 * [x] Chức năng đăng kí địa điểm: hiện danh sách các địa điểm, thời điểm đăng kí tiêm, người dùng click chọn để đăng kí.
 * [x] Chức năng xem lịch tiêm đã đăng kí: hiện danh sách đã đăng kí, cụ thể số lần tiêm và thời gian tiêm như đã đăng kí lúc đầu.
 
