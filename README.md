@@ -44,7 +44,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Wireframe
 ![alt tag](https://github.com/haduyw32/UDPT_DoAn/blob/master/wireframe.jpg)
 ## Chuẩn đầu ra
- ![alt tag] (https://github.com/haduyw32/UDPT_DoAn/blob/master/Chuan%20dau%20ra.docx)
+ [chuan dau ra](https://github.com/haduyw32/UDPT_DoAn/blob/master/Chuan%20dau%20ra.docx)
 ## Notes
 
 Describe any challenges encountered while building the app.
