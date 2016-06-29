@@ -25,6 +25,7 @@ Danh sách chức năng **bắt buộc**:
 
 Danh sách chức năng **phụ**:
 * [x] Lọc danh sách có thể đăng kí theo tuổi phù hợp của trẻ cho phù hợp.
+* [x] HỦy danh sách vắc xin đã đăng kí
 * [ ] Gửi mail cho người dùng nếu gần tới ngày hẹn tiêm.
 
 
