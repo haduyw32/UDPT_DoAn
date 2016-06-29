@@ -27,7 +27,13 @@
             <tr>
                 <td style="width: 13%"><%- ListRe._id %></td>
                 <td style="width: 60%"><%- ListRe.use %></td>
-            
+                <td class="controlTd">
+                    <div class="inputDate">
+                        <form>
+                            <input type="checkbox">
+                        </form>
+                    </div>
+                </td>
                 
             </tr>
             <% end %>
@@ -41,43 +47,27 @@
             var typeVacxin;
             
             var index = $(".selected").index();
-            if (index >= 2) {               
-                date = $(".selected td input").val();
-                if (date != "") {
-                    $(this).css("background", "yellow");
-                    place = $(".selected").parent().children().first().children().text();//lấy mã bệnh viện
-                    typeVacxin = $(".selected td:first").text(); //mã vacxin
-                    var temp = {_id:{place: place, typeVacxin: typeVacxin, user: getCookie("c_id")}, date:date};
-                    reg.push(temp);
-                    var deselect = $("tr:not(tr.selected)");
-                    for (var i=0; i<deselect.length; i++) {
-                        if (deselect.eq(i).children().first().text() == typeVacxin) {
-                            deselect.eq(i).children().find("input").prop('disabled', true);
-                            deselect.eq(i).css("background", "red");
-                        }
-                    }
-                }
+            if (index) {               
+                check = $(".selected td input");
+                if (check[0].checked == true) {
+                    typeVacxin = $(".selected td:first").text();
+                    reg.push(typeVacxin);
+                    console.log(reg);
+                } 
                 else {
-                    $(this).css("background", "#d4d1d5");
                     typeVacxin = $(".selected td:first").text();
                     for (var i=0; i<reg.length; i++) {
-                        if (reg[i]._id.typeVacxin == typeVacxin) {
+                        if (typeVacxin == reg[i]) {
                             reg.splice(i, 1);
                             break;
-                        }
-                    }
-                    var deselect = $("tr:not(tr.selected)");
-                    for (var i=0; i<deselect.length; i++) {
-                        if (deselect.eq(i).children().first().text() == typeVacxin) {
-                            deselect.eq(i).children().find("input").prop('disabled', false);
-                            deselect.eq(i).css("background", "#d4d1d5");
                         }
                     }
                 }
                 $(this).removeClass("selected");
             }
-            else
+            else {
                 return;
+            }
         });
     });
     </script>
@@ -88,16 +78,18 @@
     <script type="text/javascript">
         $(".footer button").click(function() {
             if (reg.length == 0) {
-                alert("Bạn chưa đăng kí lịch tiêm nào. Chọn và thử lại!");
+                alert("Bạn chưa chọn lịch tiêm nào. Chọn và thử lại!");
             }
             else {
-                $.post("/saveReg", {reg: reg},  function(data) { //reg[{_id:{place:, stypeVacxin, user}, date}]
+                $.post("/delReg", {reg: reg, user: getCookie("c_id")},  function(data) { //reg[], user
                     if (data == 1) {
-                        alert ("Đăng kí thành công");
-                        window.location.reload();
+                        alert ("Hủy đăng kí thành công");
+                        window.location.href = "/";
+
+                        
                     }
                     else{
-                        alert ("Có lỗi trong quá trình đăng kí");
+                        alert ("Lỗi");
                     }
                 });
             }

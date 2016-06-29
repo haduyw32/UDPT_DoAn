@@ -100,12 +100,12 @@ function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại va
 	});
 }
 
-function DeleteRegister (data, callback) {
+function deleteRegister (data, callback) {
 	var varOut = 1;
-	var insertReg = function(db, callback) {
+	var deleteReg = function(db, callback) {
 		for (var i=0; i<data.length; i++) {
-			db.collection('register').remove({'_id.typeVacxin':data[i].typeVacxin,'_id.user':data[i].user})
-			}, function(err, result) {
+			db.collection('register').remove({"_id.user":  data.user, "_id.typeVacxin": data.reg[i].typeVacxin},
+			function(err, result) {
 				if (err) {
 					varOut = 0;
 					callback();
@@ -118,9 +118,10 @@ function DeleteRegister (data, callback) {
 	};
 
 	var deleteInject = function(db, callback) {
-		for (var i=0; i<data.length; i++) {
-			db.collection('injectInfo').remove({'_id.typeVacxin':data[i].typeVacxin,'_id.user':data[i].user})
-			}, function(err, result) {
+		for (var i=0; i<data.length; i++) 
+		{
+			db.collection('injectInfo').remove({"_id.user":  data.user, "_id.typeVacxin": data.reg[i].typeVacxin}, 
+				function(err, result) {
 				if (err) {
 					varOut = 0;
 					callback();
@@ -132,6 +133,7 @@ function DeleteRegister (data, callback) {
 		}
 		
 	};
+}
  
 
 function insertRegister (data, callback) {
@@ -155,18 +157,25 @@ function insertRegister (data, callback) {
 	};
 
 	var insertInject = function(db, callback) {
-		for (var i=0; i<data.length; i++) {
-			db.collection('injectInfo').insertOne( {
-				_id:{user: data[i]._id.user, typeVacxin: data[i]._id.typeVacxin}, lichTiem:[{ordinalNum: 0, date: data[i].date, state: 0}]
-			}, function(err, result) {
-				if (err) {
-					varOut = 0;
-					callback();
-					return;
-				}
-				console.log("Inserted a document into the register and injectInfo collection.");
-				if (result.insertedId.typeVacxin == data[data.length-1]._id.typeVacxin && result.insertedId.user == data[data.length-1]._id.user) {
-					callback();
+		for (var i=0; i<data.length; i++) 
+		{
+			db.collection('injectInfo').insertOne
+			( 
+				{
+					_id:{user: data[i]._id.user, 
+					typeVacxin: data[i]._id.typeVacxin}, 
+					lichTiem:[{ordinalNum: 0, date: data[i].date, state: 0}]
+				}, 
+				function(err, result) 
+				{
+					if (err) {
+						varOut = 0;
+						callback();
+						return;
+						}
+					console.log("Inserted a document into the register and injectInfo collection.");
+					if (result.insertedId.typeVacxin == data[data.length-1]._id.typeVacxin && result.insertedId.user == data[data.length-1]._id.user) {
+						callback();
 				}
 			});
 		}
@@ -209,7 +218,6 @@ function loadRegister(user, callback) {//Lấy thông tin đã đang ký -- tr�
 	});
 }
 
-d
 
 function loadInfo2nd(user, callback) { //vacxin là mảng _id các loại vacxin
 	
@@ -404,10 +412,51 @@ exports.getList = getList;
 exports.getMes = getMes;
 exports.sendMes = sendMes;
 */
+
+
+function deleteRegister (data, callback) {
+	var varOut = 1;
+	var deleteReg = function(db) {
+		for (var i=0; i<data.reg.length; i++) {
+			db.collection('register').remove({"_id.user":  data.user, "_id.typeVacxin": data.reg[i]},
+			function(err, result) {
+				if (err) {
+					varOut = 0;
+				}				
+				else
+					return;
+			});
+		}
+	};
+
+	var deleteInject = function(db) {
+		for (var i=0; i<data.reg.length; i++) 
+		{
+			db.collection('injectInfo').remove({"_id.user":  data.user, "_id.typeVacxin": data.reg[i]}, 
+				function(err, result) {
+				if (err) {
+					varOut = 0;
+					return;
+				}
+				console.log("Deleted a document from the register and injectInfo collection.");
+				callback();
+			});
+		}
+		
+	};
+
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		deleteReg(db);
+		deleteInject(db);
+		callback(varOut);
+	});
+}
+
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.loadSchedule = loadSchedule;
 exports.insertRegister = insertRegister;
 exports.loadRegister = loadRegister;
-exports.loadInfo1st = loadInfo1st;
 exports.loadInfo2nd = loadInfo2nd;
+exports.deleteRegister = deleteRegister;
