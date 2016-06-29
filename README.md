@@ -37,7 +37,7 @@ Các chuẩn đầu ra cần thực hiện:
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](relative-path-to-your-gif-file-on-github-or-absolute-path-to-file-on-imgur-or-youtube)
+![Video Walkthrough](https://github.com/haduyw32/UDPT_DoAn/blob/master/demo.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
