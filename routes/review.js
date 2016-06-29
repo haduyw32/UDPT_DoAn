@@ -5,9 +5,13 @@ module.exports = function (app) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.get('/review', function (req, res, next) {
-		
+			db.loadInfo2nd(req.query.user, function(vacxin) {
+				
+					res.render('review.ect', {listTable: docOut});
+				});
+			});
 	});
-}
+
 	
 /*
 + vacxin {_id, use, age[]}
@@ -16,6 +20,7 @@ module.exports = function (app) {
 ---------------------------------------------------------------------
 +injectInfo {_id:{user, typeVacxin}, lichTiem[{ordinalNum, date, state}]}
 */
-		
+	
 
 	
+}
