@@ -5,6 +5,10 @@
 Danh sách sinh viên:    1312024 - Phạm Trọng Ân
                         
                         1312080 - Hà Xuân Duy
+                        
+                        1312090 - Dương Chí Dũng 
+                        
+                        1312667 - Nguyễn Văn Tuấn
 
 URL: **Insert your Heroku URL here**
 
@@ -15,19 +19,19 @@ Danh sách chức năng **bắt buộc**:
 * [x] Đăng ký tài khoản bằng email, password, tên, số CMND người đỡ đầu, ngày sinh của trẻ.
 * [x] Đăng nhập bằng email và password.
 * [ ] Sau khi đăng nhập, người dùng sẽ được chuyển đến trang liệt kê danh sách các tính năng được cung cấp: đăng kí địa điểm thời gian tiêm, xem lịch tiêm đã đăng kí.
-* [ ] Chức năng đăng kí địa điểm: hiện danh sách các địa điểm, thời điểm đăng kí tiêm, người dùng click chọn để đăng kí.
-* [ ] Chức năng xem lịch tiêm đã đăng kí: hiện danh sách đã đăng kí, cụ thể số lần tiêm và thời gian tiêm như đã đăng kí lúc đầu.
+* [x] Chức năng đăng kí địa điểm: hiện danh sách các địa điểm, thời điểm đăng kí tiêm, người dùng click chọn để đăng kí.
+* [x] Chức năng xem lịch tiêm đã đăng kí: hiện danh sách đã đăng kí, cụ thể số lần tiêm và thời gian tiêm như đã đăng kí lúc đầu.
 
 
 Danh sách chức năng **phụ**:
-* [ ] Lọc danh sách có thể đăng kí theo tuổi phù hợp của trẻ cho phù hợp.
+* [x] Lọc danh sách có thể đăng kí theo tuổi phù hợp của trẻ cho phù hợp.
 * [ ] Gửi mail cho người dùng nếu gần tới ngày hẹn tiêm.
 
 
 Các chuẩn đầu ra cần thực hiện:
 * [ ] Git với Centralize Workflow
 * [ ] Git theo Feature Branch Workflow
-* [ ] Git theo Feature Branch Workflow có Pull Request
+* [x] Git theo Feature Branch Workflow có Pull Request
 * [ ] Git theo Gitflow Workflow
 ## Video Walkthrough
 
