@@ -73,6 +73,7 @@ function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại va
 		]);
 		cursor.each(function(err, doc) {
 			assert.equal(err, null);
+			
 			if (doc != null) {
 				for (var i=0; i<vacxin.length; i++) {
 					for (var j=0; j<doc.vacxin_docs.length;j++) {
@@ -98,6 +99,40 @@ function loadSchedule(vacxin, callback) { //vacxin là mảng _id các loại va
 		});
 	});
 }
+
+function DeleteRegister (data, callback) {
+	var varOut = 1;
+	var insertReg = function(db, callback) {
+		for (var i=0; i<data.length; i++) {
+			db.collection('register').remove({'_id.typeVacxin':data[i].typeVacxin,'_id.user':data[i].user})
+			}, function(err, result) {
+				if (err) {
+					varOut = 0;
+					callback();
+				}				
+				else
+					callback();				
+			});
+		}
+		
+	};
+
+	var deleteInject = function(db, callback) {
+		for (var i=0; i<data.length; i++) {
+			db.collection('injectInfo').remove({'_id.typeVacxin':data[i].typeVacxin,'_id.user':data[i].user})
+			}, function(err, result) {
+				if (err) {
+					varOut = 0;
+					callback();
+					return;
+				}
+				console.log("Deleted a document from the register and injectInfo collection.");
+				callback();
+			});
+		}
+		
+	};
+ 
 
 function insertRegister (data, callback) {
 	var varOut = 1;
@@ -149,8 +184,9 @@ function insertRegister (data, callback) {
 	});
 }
 
-function loadRegister(user, callback) {
+function loadRegister(user, callback) {//Lấy thông tin đã đang ký -- trả về các loại vacxin mà người dùng đã đăng ký
 	var docOut = [];
+	
 	var findReg = function(db, callback) {
 		var cursor =db.collection('register').find( { "_id.user":  user} );
 		cursor.each(function(err, doc) {
@@ -164,7 +200,46 @@ function loadRegister(user, callback) {
 	};
 	MongoClient.connect(url, function(err, db) {
 		assert.equal(null, err);
+		console.log("test docout");
+		console.log(docOut);
 		findReg(db, function() {
+			db.close();
+			callback(docOut);
+		});
+	});
+}
+
+d
+
+function loadInfo2nd(user, callback) { //vacxin là mảng _id các loại vacxin
+	
+	var docOut = [];
+	var findSchedule = function(db, callback) {
+		var cursor =db.collection('register').aggregate([
+		{
+			$lookup:
+        	{
+	          from: "vacxin",
+	          localField: "_id.typeVacxin",
+	          foreignField: "_id",
+	          as: "vacxin_docs"
+        	}
+		}
+		]);
+		cursor.each(function(err, doc) {
+			assert.equal(err, null);				
+			try {
+				if(doc._id.user == user)
+					docOut.push(doc.vacxin_docs[0]);				
+			} catch (e)  {
+				db.close();
+				callback(docOut);
+			}
+		});
+	};
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findSchedule(db, function() {
 			db.close();
 			callback(docOut);
 		});
@@ -334,3 +409,5 @@ exports.loginUser = loginUser;
 exports.loadSchedule = loadSchedule;
 exports.insertRegister = insertRegister;
 exports.loadRegister = loadRegister;
+exports.loadInfo1st = loadInfo1st;
+exports.loadInfo2nd = loadInfo2nd;
